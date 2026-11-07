@@ -1,0 +1,27 @@
+# зависимости и сборка
+node_modules/
+dist/
+
+# переменные окружения: реальные значения в репозиторий не попадают
+.env
+.env.*
+!.env.example
+
+# Supabase CLI: временные файлы и локальные секреты
+supabase/.temp/
+supabase/.branches/
+supabase/.env
+
+# доступы демо-пользователей и любые локальные заметки с паролями
+*.local.md
+*.local.txt
+*.local.sql
+demo-credentials*
+
+# служебное
+.claude/
+.vercel/
+.DS_Store
+*.log
+.vscode/
+.idea/
