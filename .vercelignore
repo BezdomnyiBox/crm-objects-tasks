@@ -1,0 +1,25 @@
+# Что НЕ отправлять в Vercel при деплое из командной строки (`vercel deploy`).
+# Для сборки приложения нужны только исходники: src, public, index.html, конфиги и package*.json.
+# Этот файл заменяет .gitignore при загрузке, поэтому локальные секреты перечислены здесь явно.
+
+# локальные файлы с доступами и заметками
+.env
+.env.*
+!.env.example
+*.local.md
+*.local.txt
+*.local.sql
+demo-credentials*
+
+# всё, что приложению не нужно для сборки
+docs/
+supabase/
+tests/
+scripts/
+
+# служебное
+node_modules/
+dist/
+.claude/
+.vercel/
+.git/

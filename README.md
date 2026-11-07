@@ -5,6 +5,8 @@
 **Стек:** React 19 + TypeScript + Vite · Mantine (интерфейс) · TanStack Query · Supabase (Postgres + Auth).
 **Главная идея:** правила доступа живут **в самой базе** (RLS, функции, триггеры), а не в интерфейсе. Если обратиться к Supabase напрямую, минуя сайт, правила работают так же.
 
+**Демо:** https://crm-objects-tasks-dusky.vercel.app (доступы выдаются проверяющим отдельно).
+
 | Документ | Для чего |
 | --- | --- |
 | [docs/for-manager.md](docs/for-manager.md) | Объяснение для руководителя-непрограммиста: как устроена система и что не может исполнитель |
@@ -106,6 +108,18 @@ npm run check:secrets  # нет ли секретных ключей в репо
 3. *Deploy*. После этого в Supabase (*Authentication → URL Configuration*) укажите адрес сайта как **Site URL**.
 
 Подойдёт и любой статический хостинг: сборка — папка `dist`, все пути должны отдавать `index.html`.
+
+**Из командной строки** (так развёрнуто демо). Нужен Vercel CLI версии 65 и выше: старый вход по GitHub, GitLab и email отключён, поэтому сначала `npm i -g vercel@latest`. Дальше:
+
+```bash
+vercel login            # вход по ссылке и коду (Device Flow): подтвердите в браузере
+vercel link --yes       # создаёт проект в вашем аккаунте
+vercel env add VITE_SUPABASE_URL --environment production,preview --value <адрес проекта> --no-sensitive --yes
+vercel env add VITE_SUPABASE_PUBLISHABLE_KEY --environment production,preview --value <публичный ключ> --no-sensitive --yes
+vercel deploy --prod --yes
+```
+
+Файл [`.vercelignore`](.vercelignore) не даёт загрузить в Vercel локальные заметки, тесты и миграции. Проверяющим давайте адрес вида `<проект>.vercel.app`: он открыт без входа, а адрес конкретного деплоя (`…-<хэш>-<аккаунт>.vercel.app`) закрыт защитой Vercel. Автодеплой по `git push` включается в *Settings → Git* проекта (приложению Vercel нужен доступ к репозиторию на GitHub); пока деплой делается вручную.
 
 ## Структура
 
