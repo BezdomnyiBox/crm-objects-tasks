@@ -175,12 +175,17 @@ describe(
     })
 
     describe('Регистрация и вход', () => {
-      it('открытая регистрация отключена в настройках проекта', async () => {
+      it('открытая регистрация и анонимные входы отключены в настройках проекта', async () => {
         const res = await api('/auth/v1/settings')
         assert.equal(
           res.json?.disable_signup,
           true,
           'Регистрация ОТКРЫТА. Выключите «Allow new users to sign up» (Authentication → Sign In / Providers) — README, шаг 4',
+        )
+        assert.notEqual(
+          res.json?.external?.anonymous_users,
+          true,
+          'Анонимные входы ВКЛЮЧЕНЫ. Выключите «Allow anonymous sign-ins» (Authentication → Sign In / Providers)',
         )
       })
 
